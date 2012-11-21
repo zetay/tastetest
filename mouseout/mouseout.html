@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+        <title>mouseout、mouseover</title>
+        <style>
+            div {
+                margin: 30px 0;
+                line-height: 300%;
+                background: yellow;
+                color: white;
+                position: relative;
+            }
+            div .first {
+                background: red;
+            }
+            div .second {
+                background: green;
+            }
+            div .third {
+                background: blue;
+            }
+            .static {
+                position: static;
+            }
+            .width {
+                width: 100%;
+            }
+        </style>
+        
+        <script>
+            var bind = function(id){
+                var el = document.getElementById(id);
+            
+                el.onmouseout = function(ev){
+                    var e = ev || window.event;
+                    console.log('mouseout');
+                    if(ev === e){
+                        console.log('current:', e.currentTarget.tagName);
+                        console.log('target:', e.target.tagName);
+                    } else {
+                        console.log('from:', e.fromElement.tagName);
+                        console.log('src:', (e.target || e.srcElement).tagName);
+                        console.log('to:', e.toElement.tagName);
+                    }
+                };
+                
+                el.onmouseover = function(ev){
+                    var e = ev || window.event;
+                    console.log('mouseover');
+                    if(ev === e){
+                        console.log('current:', e.currentTarget.tagName);
+                        console.log('target:', e.target.tagName);
+                    } else {
+                        console.log('from:', e.fromElement.tagName);
+                        console.log('src:', (e.target || e.srcElement).tagName);
+                        console.log('to:', e.toElement.tagName);
+                    }
+                };
+            };
+        </script>
+	</head>
+	<body>
+        <h1>在各浏览器中，监听relative元素A的mouseout和mouseover事件，当在A的子元素间移动时，触发A的mouseout或mouseover存在差异</h1>
+        <h2>测试浏览器：ie7-9，firefox</h2>
+    
+		<div id="test1">            
+            <p class="first">子元素间切换会触发mouseout和mouseover</p>
+            <p class="second">ie7对于同行文字间的空白，会认为是body的部分，触发mouseout或mouseover</p>
+            <p class="third">ie8视br为节点，触发mouseout或mouseover。<br/>** 请将鼠标移至“。”之后</p>
+		</div>
+
+		<script type="text/javascript">
+			bind('test1');
+		</script>
+        
+        
+		<div id="test2" class="static">            
+            <p class="first">解决方案：移除relative</p>
+            <p class="second">解决：ie7对于同行文字间的空白，会认为是body的部分</p>
+            <p class="third">ie8视br为节点。<br/>** 请将鼠标移至“。”之后</p>
+		</div>
+
+		<script type="text/javascript">
+			bind('test2');
+		</script>
+        
+        
+		<div id="test3" class="width">            
+            <p class="first">解决方案：限定宽度</p>
+            <p class="second">解决：ie7对于同行文字间的空白，会认为是body的部分</p>
+            <p class="third">ie8视br为节点。<br/>** 请将鼠标移至“。”之后</p>
+		</div>
+
+		<script type="text/javascript">
+			bind('test3');
+		</script>
+	</body>
+</html>
