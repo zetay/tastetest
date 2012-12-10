@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+        <title>window.close</title>        
+	</head>
+	<body>
+        <a id="J-close" href="#">close current window</a><br/>
+        <a href="#" id="J-open">JS open window</a><br/>
+        <a id="J-close-ie" href="#">close ie/chrome window</a>
+        
+        <script>
+            var get = function(id){
+                return document.getElementById(id);
+            },
+            preventDefault = function(e){
+                var e = window.event || e;
+                e.preventDefault ? e.preventDefault() : e.returnValue = false;
+            };
+            get('J-close').onclick = function(e){
+                preventDefault(e);
+                window.close();
+            };
+            get('J-open').onclick = function(e){
+                preventDefault(e);
+                window.open('#');
+            };
+            
+            get('J-close-ie').onclick = function(e){
+                preventDefault(e);
+                
+                window.opener = null;
+                window.open('', '_top');
+                window.close();
+            };
+        </script>
+	</body>
+</html>
