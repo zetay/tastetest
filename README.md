@@ -5,3 +5,6 @@ Taste Test
 
 ## mouseout
 测试moustout、mouseover在各浏览器间触发的差异
+
+## window.close
+测试window.close在各浏览器间触发的差异
